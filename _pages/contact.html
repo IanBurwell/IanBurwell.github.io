@@ -10,12 +10,10 @@ priority: 0.9
     "@context": "http://schema.org",
     "@type": "Person",
     "name": "Ian Burwell",
-    "url": "http://www.himatt.com",
+    "url": "http://www.ianburwell.com",
     "sameAs": [
       "https://twitter.com/{{ site.social-username.twitter }}",
-      "https://instagram.com/{{ site.social-username.instagram }}",
-      "https://linkedin.com/in/{{ site.social-username.linkedin }}",
-      "https://medium.com/{{ site.social-username.medium }}"
+      "https://linkedin.com/in/{{ site.social-username.linkedin }}"
     ]
   }
 </script>
@@ -25,14 +23,14 @@ priority: 0.9
 
     <aside class="contact-intro">
       <p class="paragraph-huge">
-        You can see what I'm up to on <a href="//instagram.com/{{ site.social-username.instagram }}">Instagram</a>, connect with me on
-        <a href="//linkedin.com/in/{{ site.social-username.linkedin }}">Linkedin</a>,
-        or hear what I'm listening to on <a href="//open.spotify.com/user/{{ site.social-username.spotify }}">Spotify</a>.
+        Feel free to connect with me on <a href="//linkedin.com/in/{{ site.social-username.linkedin }}">Linkedin</a>
+        or hear what I'm currently listening to on <a href="//open.spotify.com/user/{{ site.social-username.spotify }}">Spotify</a>.
       </p>
     </aside>
 
     <div class="contact-form">
-      <form netlify action="/contact/confirmation">
+      <form action="https://formspree.io/f/xaylpeqy" method="POST">
+
         <fieldset>
           <section>
             <label for="name">Name
@@ -41,8 +39,8 @@ priority: 0.9
           </section>
 
           <section>
-            <label for="email">Email
-              <input required type="email" name="email" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$">
+            <label for="_replyto">Email
+              <input required type="email" name="_replyto"  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$">
             </label>
           </section>
 

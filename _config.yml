@@ -15,30 +15,29 @@ exclude:
 
 include:
   - _pages
-  - _redirects
 
 # Site settings
-title: Matt Grey
-long-title: Matt Grey Design
-email: mattgreydesign@gmail.com
-description: "The selected portfolio of London based digital product designer Matt Grey"
+title: Ian Burwell
+long-title: Ian Burwell
+email: ian@burwell.com
+description: "The portfolio of Engineer Ian Burwell"
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://himatt.com" # the base hostname & protocol for your site
-timezone: Europe/London
+url: "https://ianburwell.com" # the base hostname & protocol for your site
+timezone: America/New_York
 year: 2020
-start-year: 2010
+start-year: 2020
 sitemap: true
 
 # Social networks
 social-username:
-  twitter: "@mattgreydesign"
-  linkedin: "himatt"
-  github: "mattgreydesign"
-  medium: "@mattgreydesign"
-  pinterest: "mattgreydesign"
-  instagram: "mattgreydesign"
-  flickr: "mattgreydesign"
-  spotify: "mattgreydesign"
+  twitter: "@spyguyian"
+  linkedin: "ianburwell"
+  github: "IanBurwell"
+  # medium: "@"
+  # pinterest: ""
+  # instagram: ""
+  # flickr: ""
+  spotify: "spyguyian"
 
 # Content
 image_serve_path: "/images" # <img src="{{ site.image_serve_path }}/projects/img.jpg">
@@ -69,8 +68,6 @@ compress_html: # http://jch.penibelst.de/
 navigation:
   - title: Projects
     url: /
-  - title: Fonts
-    url: /fonts
   - title: About
     url: /about
   - title: Contact
@@ -83,9 +80,7 @@ collections:
   projects:
     output: true
     permalink: /projects/:path/
-  fonts:
-    output: true
-    permalink: /fonts/:path/
+
 
 defaults:
   - scope:
@@ -93,8 +88,4 @@ defaults:
       type: "projects"
     values:
       layout: "project"
-  - scope:
-      path: ""
-      type: "fonts"
-    values:
-      layout: "font"
+

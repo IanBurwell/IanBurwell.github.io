@@ -12,93 +12,40 @@ intro: |
 profile_picture: /images/profile-pictures/profile.jpg
 
 experience:
-  - company: Paymentsense
-    position: Product designer (Senior)
-    period: August 2020 - Present
+  - company: NASA Ames Research Center
+    position: NASA Aerospace Research Institute Intern
+    period: June – August 2020
 
-  - company: Clearscore
-    position: Product designer, Design Systems
+  - company: Barrett Technology
+    position: Electrical Engineering Intern
     period: July 2019 - August 2020
 
-  - company: Acuris
-    position: Product designer (UX/UI)
-    period: Jan 2019 - July 2019
-
-  - company: Tesco Stores Ltd.
-    position: UI Designer
-    period: Mar 2018 - Jan 2019
-
-  - company: Alliants
-    position: Visual/UX designer and Consultant
-    period: Jun 2014 - Feb 2018
-
-  - company: Techbods
-    position: Graphic Designer
-    period: Jul 2013 - Sep 2013
-
-  - company: Leepeckgroup
-    position: Work Experience - Designer
-    period: Sep 2010
-
-  - company: Hampshire County Council
-    position: Work Experience - Graphic Designer
-    period: Oct 2009
+  - company: Empow Studios
+    position: Lead Instructor
+    period: March 2015 - May 2019
 
 education:
-  - course: Two-day User Experience Design Bootcamp
-    place: General Assembly
-    period: 2017
+  - course: BA Elec & Comp Eng
+    place: Northeastern University
+    period: 2019 - 2023
 
-  - course: Foundation Certificate in User Experience
-    place: BCS, The Chartered Institute for IT
-    period: 2016
+  - course: Study Abroad 
+    place: American College of Thessaloniki, Greece
+    period: 2019
 
-  - course: BA(Hons) Graphic design
-    place: Falmouth University
-    period: 2011 - 2014
-
-  - course: Short course, Graphic design
-    place: Central Saint Martins (UAL)
-    period: 2010
-
-competitions:
-  - event: RESI Hackathon
-    period: 2018
-    result: Winners - Team FreeCycle
-    link: https://medium.com/@bemyapp/resi-hackathon-2018-cbf185c29838
-
-  - event: Culture Mile Fusion Prize
-    period: 2019 - Present
-    result: Shortlisted (Ongoing) - Team Knolo
-    link: https://www.culturemile.london/fusion-prize-shortlist/knolo
+  - course: Highschool
+    place: Lexington Highschool
+    period: 2015 - 2019
 
 skills:
-  - User Experience design (UX)
-  - User Interface design (UI)
-  - Graphic design
-  - Cross platform design (Desktop, Native Mobile, responsive, smartwatch, kiosk etc.)
-  - Design libraries and Styleguides
-  - User journey mapping
-  - User interviews and Usability testing
-  - Information Architecture
-  - Wireframing
-  - Interactive prototypes
-  - Contextual inquiry
-
-tools:
-  - Sketch app, Figma
-  - Flinto, Balsamiq, Invision, Zeplin, Marvel app
-  - Adobe Creative Cloud Suite (Photoshop, XD, Illustrator, After Effects...)
-  - HTML
-  - CSS and SASS (SCSS)
-  - jQuery (for prototyping only)
-  - Jekyll
-  - Frontend templating languages (ERB, Handlebars, Blade, Liquid)
-  - Glyphs app, Fontlab, Fontographer
+  - Printed Circuit Board design
+  - Embedded Programming (C++, Verilog, Mbed, Arduino)
+  - Scripting (Python, MATLAB, Java)
+  - ROS Development (ROS1 & ROS2)
 
 about_site: |
-  - Designed and built from scratch by me using
-  [Jekyll](https://jekyllrb.com/).
+  - Designed and built from using
+  [Jekyll](https://jekyllrb.com/) based on [Matt Grey's open-source code](https://github.com/MattGreyDesign/himatt.com).
 
   - The typefaces used are
   [DM Sans](https://fonts.google.com/specimen/DM+Sans) and
@@ -111,11 +58,11 @@ about_site: |
   [Normalize.css](http://github.com/necolas/normalize.css).
 
   - All the code for this site is open source and available on
-  [Github](https://github.com/mattgreydesign/mattgreydesign.github.io), deployed
-  and hosted using [Netlify](http://netlify.com/).
+  [Github](https://github.com/ianburwell/ianburwell.github.io), deployed
+  and hosted using GitHub Pages.
 
   - Although the code is opensource under the GNU General Public License v3, all
-  content is Copyrighted. [Read more](https://github.com/MattGreyDesign/mattgreydesign.github.io/blob/master/LICENSE)
+  content is Copyrighted. [Read more](https://github.com/IanBurwell/IanBurwell.github.io/blob/master/LICENSE)
   {:.list--dashed .list--small}
 ---
 
@@ -123,14 +70,14 @@ about_site: |
   {
     "@context": "http://schema.org/",
     "@type": "Person",
-    "name": "Matt Grey",
-    "jobTitle": "UX Designer",
-    "nationality": "British",
-    "url": "http://www.himatt.com/",
+    "name": "Ian Burwell",
+    "jobTitle": "Engineer",
+    "nationality": "American",
+    "url": "http://www.ianburwell.com/",
     "address": {
       "@type": "PostalAddress",
-      "addressLocality": "London",
-      "addressCountry": "United Kingdom"
+      "addressLocality": "Boston",
+      "addressCountry": "United States"
     }
   }
 </script>
@@ -168,28 +115,6 @@ about_site: |
               <dd class="relational-list__description">{{ education-item.place | markdownify}}</dd>
             {% endfor %}
           </dl>
-        </div>
-
-        <div class="about-section about-section--nested">
-          <h3 class="about-section-title type-level-2">Competitions</h3>
-          <dl class="relational-list">
-            {% for competition-item in page.competitions %}
-              <dt class="relational-list__title">{{ competition-item.event | markdownify}}</dt>
-              <dd class="relational-list__description relational-list__description--period">{{ competition-item.period | markdownify}}</dd>
-              <dd class="relational-list__description"><a href="{{ competition-item.link }}">{{ competition-item.result | markdownify}}</a></dd>
-            {% endfor %}
-          </dl>
-        </div>
-      </div>
-
-      <div class="about-tools">
-        <div class="about-section">
-          <h3 class="about-section-title type-level-2">Tools &amp; technologies</h3>
-          <ul class="list--dashed list--small">
-            {% for tool in page.tools %}
-              <li>{{ tool | markdownify }}</li>
-            {% endfor %}
-          </ul>
         </div>
       </div>
 
