@@ -1,8 +1,8 @@
 ---
 date: 2018-07-01
 published: true
-title: "ADS"
-description: "Active Defence System from Rainbow 6 Seige"
+title: "Active Defence System"
+description: "ADS from Rainbow 6 Seige"
 categories: embedded design, computer vision, mechanical design
 disciplines: Electronics, Programming, 3D printing
 media: Device
