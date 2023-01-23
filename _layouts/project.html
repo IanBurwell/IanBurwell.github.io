@@ -51,9 +51,9 @@ title-class: project
           </div>
           {% endif %}
 
-        {% if page.website.url %}
+        {% if page.url_button.url %}
         <div class="project-detail project-detail-12">
-          <a href="{{ page.website.url }}" class="button-secondary">{{ page.website.button_text }}</a>
+          <a href="{{ page.url_button.url | prepend: site.url }}" class="button-secondary">{{ page.url_button.button_text }}</a>
         </div>
         {% endif %}
       </div>
