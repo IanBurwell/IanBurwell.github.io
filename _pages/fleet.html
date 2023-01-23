@@ -1,8 +1,8 @@
 ---
 layout: page
-title_override: Ian Burwell - ECE
-permalink: /
-priority: 1.0
+title: Fleet
+permalink: /fleet/
+priority: 0.95
 ---
 
 <div class="projects-intro-wrapper">
@@ -10,22 +10,23 @@ priority: 1.0
     <p class="type-level-1">Ian&nbsp;Burwell</p>
     <p class="type-level-3">Engineer&nbsp;|&nbsp;Programmer&nbsp;|&nbsp;Maker</p>
   </div>
-</div>
+</div> 
 
 <div class="projects">
-{% for project in site.projects reversed limit:include.limit %}
+{% for drone in site.drones reversed limit:include.limit %}
   <article class="project-listing">
     <div class="thumbnail-wrapper">
-      <a href="{{ project.url | prepend: site.baseurl }}">
+      <a href="{{ drone.url | prepend: site.baseurl }}">
         <div class="thumbnail-description-wrapper">
-          <img src="{{ project.thumbnail | prepend: site.image_serve_path }}" alt="{{ project.title }}" width="600" height="450">
+          <img src="{{ drone.thumbnail | prepend: site.image_serve_path }}" alt="{{ drone.name }}" width="600" height="450">
           <p class="thumbnail-description">
-            <span>{{ project.description }}</span>
+            <span>{{ drone.description }}</span>
           </p>
         </div>
         <h3 aria-hidden="true">{{ project.title }}</h3>
       </a>
-    </div>
+  </div>
   </article>
 {% endfor %}
 </div>
+

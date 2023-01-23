@@ -24,7 +24,7 @@ description: "The portfolio of Engineer Ian Burwell"
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://ianburwell.com" # the base hostname & protocol for your site
 timezone: America/New_York
-year: 2020
+year: 2023
 start-year: 2020
 sitemap: true
 
@@ -68,11 +68,14 @@ compress_html: # http://jch.penibelst.de/
 navigation:
   - title: Projects
     url: /
+  - title: Fleet
+    url: /fleet
   - title: About
     url: /about
   - title: Contact
     url: /contact
 
+ 
 permalink: /:title/
 
 # Configure site collections
@@ -80,6 +83,8 @@ collections:
   projects:
     output: true
     permalink: /projects/:path/
+  drones:
+    output: true
 
 
 defaults:
