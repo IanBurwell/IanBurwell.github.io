@@ -1,26 +1,16 @@
 source "https://rubygems.org"
 
-# Hello! This is where you manage which Jekyll version is used to run.
-# When you want to use a different version, change it below, save the
-# file and run `bundle install`. Run Jekyll with `bundle exec`, like so:
-#
-#     bundle exec jekyll serve
-#
-# This will help ensure the proper Jekyll version is running.
-# Happy Jekylling!
-source 'https://rubygems.org' do
-  gem "ruby"
-  gem "jekyll", "4.1.1"
-end
-
-# If you want to use GitHub Pages, remove the "gem "jekyll"" above and
-# uncomment the line below. To upgrade, run `bundle update github-pages`.
-# gem "github-pages", group: :jekyll_plugins
+# Jekyll and core dependencies
+gem "jekyll", "~> 4.3.2"
+gem "liquid", "~> 4.0.4"
+gem "webrick", "~> 1.8"
+gem "ffi", "~> 1.15.5"  # Add compatible FFI version
+gem "sassc", "~> 2.4.0" # For SASS support
+gem "rb-inotify", "~> 0.10.1" # For Linux file watching
 
 # If you have any plugins, put them here!
 group :jekyll_plugins do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-
+gem 'tzinfo-data', platforms: [:windows, :jruby]
