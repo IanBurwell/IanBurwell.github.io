@@ -1,5 +1,11 @@
 [
 	{
 		"id": "guide"
+	},
+	{
+		"id": "retrospective"
+	},
+	{
+		"id": "ramblings"
 	}
 ]
