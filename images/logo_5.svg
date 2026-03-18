@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <bx:grid x="0" y="0" width="100" height="100" divisions="4"/>
+  </defs>
+  <rect x="75" y="75" width="350" height="350" style="fill: rgba(216, 216, 216, 0); stroke-width: 16px; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(241, 241, 241);"/>
+  <ellipse style="transform-box: fill-box; transform-origin: 50% 50%; stroke: rgba(0, 0, 0, 0); fill: rgb(241, 241, 241);" cx="150" cy="149.981" rx="35.981" ry="35.981"/>
+  <ellipse style="stroke-width: 1; transform-box: fill-box; transform-origin: 50% 50%; stroke: rgba(0, 0, 0, 0); fill: rgb(241, 241, 241);" cx="250" cy="149.981" rx="35.981" ry="35.981"/>
+  <ellipse style="stroke-width: 1; transform-box: fill-box; transform-origin: 50% 50%; stroke: rgba(0, 0, 0, 0); fill: rgb(241, 241, 241);" cx="350" cy="149.981" rx="35.981" ry="35.981"/>
+  <ellipse style="stroke-width: 1; transform-box: fill-box; transform-origin: 50% 50%; stroke: rgba(0, 0, 0, 0); fill: rgba(64, 64, 64, 0.835);" cx="350" cy="249.981" rx="35.981" ry="35.981"/>
+  <ellipse style="stroke-width: 1; transform-box: fill-box; transform-origin: 50% 50%; stroke: rgba(0, 0, 0, 0); fill: rgb(241, 241, 241);" cx="250" cy="249.981" rx="35.981" ry="35.981"/>
+  <ellipse style="stroke-width: 1; transform-box: fill-box; transform-origin: 50% 50%; stroke: rgba(0, 0, 0, 0); fill: rgba(64, 64, 64, 0.835);" cx="150" cy="249.981" rx="35.981" ry="35.981"/>
+  <ellipse style="stroke-width: 1; transform-box: fill-box; transform-origin: 50% 50%; stroke: rgba(0, 0, 0, 0); fill: rgb(241, 241, 241);" cx="150" cy="349.981" rx="35.981" ry="35.981"/>
+  <ellipse style="stroke-width: 1; stroke: rgba(0, 0, 0, 0); transform-box: fill-box; transform-origin: 50% 50%; fill: rgb(241, 241, 241);" cx="250.387" cy="349.981" rx="35.981" ry="35.981"/>
+  <ellipse style="stroke-width: 1; transform-box: fill-box; transform-origin: 50% 50%; stroke: rgba(0, 0, 0, 0); fill: rgb(241, 241, 241);" cx="350" cy="349.981" rx="35.981" ry="35.981"/>
+  <line style="fill: none; stroke-width: 16px; stroke-linecap: round; stroke: rgb(241, 241, 241);" x1="75" y1="125" x2="125" y2="75"/>
+</svg>
