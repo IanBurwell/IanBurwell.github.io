@@ -105,6 +105,19 @@ const { Content, headings } = await render(post);
 			<hr class="end-of-article" />
 			<a href="/blog" class="block-link" data-pagefind-ignore>← Back to blog</a>
 		</Card>
+		
+		<!-- AI Disclaimer -->
+		{
+			post.data.aiDisclaimer && (
+				<Card>
+					<h2 class="no-mt ai-disclaimer-title">AI Usage Disclaimer</h2>
+					<div class="ai-disclaimer">
+						<p>{post.data.aiDisclaimer.text}</p>
+					</div>
+				</Card>
+			)
+		}
+		
 		{
 			giscus && (
 				<Card>

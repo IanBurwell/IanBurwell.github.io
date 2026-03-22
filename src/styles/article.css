@@ -209,3 +209,28 @@ table tbody tr {
 table tbody tr td {
 	padding: 0.5rem 1.5rem 0.5rem 0;
 }
+
+.ai-disclaimer {
+	font-size: 0.9rem;
+	line-height: 1.5;
+	color: #c7c7c7;
+}
+
+.ai-disclaimer p {
+	margin: 0.5rem 0;
+}
+
+.ai-disclaimer a {
+	color: var(--primary);
+	text-decoration: none;
+	font-weight: 500;
+}
+
+.ai-disclaimer-title {
+	margin-bottom: 0.5rem !important;
+}
+
+/* Add spacing between bottom cards */
+article > .card + .card {
+	margin-top: 2rem;
+}

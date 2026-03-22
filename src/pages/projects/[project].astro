@@ -36,30 +36,6 @@ const { Content } = await render(project);
 	}}
 >
 	<div class="left" slot="left">
-		<Card class="toc-card">
-			<h2 class="no-mt">Info</h2>
-			<ul class="overview-list">
-				{
-					project.data.info.map((info) => {
-						const Tag = info.link ? "a" : "div";
-						return (
-							<li>
-								<Tag href={info.link} class="project-info-item">
-									<Icon
-										type={info.icon.type}
-										name={info.icon.name as any}
-										width={24}
-										height={24}
-										class="glow-icon"
-									/>
-									<span>{info.text}</span>
-								</Tag>
-							</li>
-						);
-					})
-				}
-			</ul>
-		</Card>
 	</div>
 	<article slot="right" data-pagefind-body>
 		<Card>
@@ -89,6 +65,45 @@ const { Content } = await render(project);
 				>← Back to projects</a
 			>
 		</Card>
+		
+		<!-- Project Info -->
+		<Card>
+			<h2 class="no-mt">Project Info</h2>
+			<ul class="overview-list">
+				{
+					project.data.info.map((info) => {
+						const Tag = info.link ? "a" : "div";
+						return (
+							<li>
+								<Tag href={info.link} class="project-info-item">
+									<Icon
+										type={info.icon.type}
+										name={info.icon.name as any}
+										width={24}
+										height={24}
+										class="glow-icon"
+									/>
+									<span>{info.text}</span>
+								</Tag>
+							</li>
+						);
+					})
+				}
+			</ul>
+		</Card>
+		
+		<!-- AI Disclaimer -->
+		{
+			project.data.aiDisclaimer && (
+				<Card>
+					<h2 class="no-mt ai-disclaimer-title">AI Usage Disclaimer</h2>
+					<div class="ai-disclaimer">
+						<p>{project.data.aiDisclaimer.text}</p>
+					</div>
+				</Card>
+			)
+		}
+	</article>
 	</article>
 </Layout>
 <style>

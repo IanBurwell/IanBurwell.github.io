@@ -21,7 +21,7 @@ const {
 
 // https://astro.build/config
 const config = defineConfig({
-	site: 'https://ianburwell.com',
+	site: 'https://ianburwell.github.io',
 	output: 'static',
 	integrations: [
 		expressiveCode({
