@@ -22,6 +22,17 @@ jobs:
         uses: actions/checkout@v5
       - name: Install, build, and upload your site
         uses: withastro/action@v5
+        # Using secrets even though they are unnecessary because f*ck it we ball
+        env:
+          GISCUS_REPO: ${{ secrets.GISCUS_REPO }}
+          GISCUS_REPO_ID: ${{ secrets.GISCUS_REPO_ID }}
+          GISCUS_CATEGORY: ${{ secrets.GISCUS_CATEGORY }}
+          GISCUS_CATEGORY_ID: ${{ secrets.GISCUS_CATEGORY_ID }}
+          GISCUS_MAPPING: ${{ secrets.GISCUS_MAPPING }}
+          GISCUS_STRICT: ${{ secrets.GISCUS_STRICT }}
+          GISCUS_REACTIONS_ENABLED: ${{ secrets.GISCUS_REACTIONS_ENABLED }}
+          GISCUS_EMIT_METADATA: ${{ secrets.GISCUS_EMIT_METADATA }}
+          GISCUS_LANG: ${{ secrets.GISCUS_LANG }}
         # with:
           # path: . # The root location of your Astro project inside the repository. (optional)
           # node-version: 24 # The specific version of Node that should be used to build your site. Defaults to 22. (optional)
