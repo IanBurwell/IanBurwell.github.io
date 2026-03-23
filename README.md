@@ -1,11 +1,13 @@
+![Hello World](images/hello-world.jpg)
+
 # Well Hello
 <div align="center">
 
 ![Profile Banner](https://img.shields.io/badge/Hello-World!-blue?style=for-the-badge&logo=github&logoColor=white)
+[![View Site](https://img.shields.io/badge/View%20Site-Live%20Preview-00ADD8?style=for-the-badge&logo=vercel&logoColor=white)](https://ianburwell.github.io)
 ![Built with Astro](https://img.shields.io/badge/Built%20with-Astro-FF5D01?style=flat&logo=astro&logoColor=white)
 ![Visitor Count](https://visitor-badge.laobi.icu/badge?page_id=IanBurwell.IanBurwell.github.io)
-[![View Site](https://img.shields.io/badge/View%20Site-Live%20Preview-00ADD8?style=for-the-badge&logo=vercel&logoColor=white)](https://ianburwell.github.io)
-
+[![Deploy to GitHub Pages](https://github.com/IanBurwell/IanBurwell.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/IanBurwell/IanBurwell.github.io/actions/workflows/deploy.yml)
 </div>
 
 Welcome to my website's source! It isn't anything special and I am no web dev, but feel free to poke around.

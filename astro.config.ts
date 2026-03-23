@@ -33,12 +33,12 @@ const config = defineConfig({
 			name: 'Ian Burwell',
 			openGraph: {
 				home: {
-					title: 'Spectre',
-					description: 'A minimalistic theme for Astro.',
+					title: 'Ian Burwell',
+					description: 'Ian Burwell\'s personal website.',
 				},
 				blog: {
 					title: 'Blog',
-					description: 'News and guides for Spectre.',
+					description: 'Ramblings and whatnot',
 				},
 				projects: {
 					title: 'Projects',
@@ -57,9 +57,9 @@ const config = defineConfig({
 			// },
 		}),
 	],
-	adapter: node({
-		mode: 'standalone',
-	}),
+	// adapter: node({
+	// 	mode: 'standalone',
+	// }),
 });
 
 export default config;
