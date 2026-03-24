@@ -18,6 +18,19 @@
 	flex-direction: column;
 }
 
+.profile-picture-trigger {
+	width: fit-content;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	cursor: pointer;
+}
+
+.profile-picture-trigger:focus-visible {
+	outline: 2px solid var(--primary);
+	outline-offset: 0.4rem;
+}
+
 .header-container {
 	display: flex;
 	flex-direction: row;

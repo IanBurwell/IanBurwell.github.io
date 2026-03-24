@@ -1,14 +1,34 @@
 import { AstroError } from "astro/errors";
 
+const LETTER_WIDTH = 17;
+const LETTER_HEIGHT = 35;
+const LETTER_ANIMATION_DURATION = 2000;
+const HOVER_ANIMATION_DURATION = 900;
+const MINIMUM_ALPHA = 0.000001;
+
 interface LetterPosition {
 	x: number;
 	y: number;
 	letter: string;
+	key: string;
 }
 
+type LetterSource = "ambient" | "hover";
+
 interface LetterInstance extends LetterPosition {
-	timestamp: number;
-	fadeout: number;
+	startAt: number;
+	endAt: number;
+	source: LetterSource;
+}
+
+declare global {
+	interface Window {
+		pageBackground?: PageBackground;
+	}
+
+	interface WindowEventMap {
+		"page-background:ready": CustomEvent<PageBackground>;
+	}
 }
 
 /**
@@ -27,9 +47,15 @@ class PageBackground {
 	private height: number = window.innerHeight;
 
 	private letterPositions: LetterPosition[] = [];
+	private letterPositionsByKey = new Map<string, LetterPosition>();
 	private letterInstances: LetterInstance[] = [];
+	private letterInstancesByKey = new Map<string, LetterInstance>();
+	private activeLetterKeys = new Set<string>();
 
 	private primaryRgb: string;
+	private easterEggEnabled = false;
+	private pointerTrackingAttached = false;
+	private lastHoveredKey: string | null = null;
 
 	/**
 	 * Initializes the background on the page.
@@ -68,6 +94,196 @@ class PageBackground {
 		requestAnimationFrame(this.redrawBackground);
 	}
 
+	private getPositionKey = (x: number, y: number) => `${x}:${y}`;
+
+	private getRandomAmbientDelay = () => {
+		return (
+			(this.LETTER_FADE_DURATION[0] +
+				Math.random() *
+					(this.LETTER_FADE_DURATION[1] - this.LETTER_FADE_DURATION[0])) *
+			1000
+		);
+	};
+
+	private getLetterAlpha = (
+		timestamp: number,
+		startAt: number,
+		endAt: number,
+	) => {
+		if (timestamp < startAt || timestamp > endAt) {
+			return 0;
+		}
+
+		const progress = (timestamp - startAt) / (endAt - startAt);
+
+		return Math.sin(progress * Math.PI);
+	};
+
+	private configureOverlayContext = () => {
+		this.overlayCtx.font = "bold 28px Geist Mono";
+		this.overlayCtx.textAlign = "start";
+		this.overlayCtx.textBaseline = "top";
+		this.overlayCtx.shadowBlur = 16;
+	};
+
+	private buildLetterInstance = (
+		position: LetterPosition,
+		source: LetterSource,
+		startAt: number,
+		duration: number,
+	): LetterInstance => {
+		return {
+			...position,
+			startAt,
+			endAt: startAt + duration,
+			source,
+		};
+	};
+
+	private registerLetterInstance = (instance: LetterInstance) => {
+		if (this.activeLetterKeys.has(instance.key)) {
+			return false;
+		}
+
+		this.activeLetterKeys.add(instance.key);
+		this.letterInstancesByKey.set(instance.key, instance);
+		this.letterInstances.push(instance);
+
+		return true;
+	};
+
+	private removeLetterInstance = (key: string) => {
+		this.activeLetterKeys.delete(key);
+		this.letterInstancesByKey.delete(key);
+	};
+
+	private getRandomInactiveLetterPosition = () => {
+		const availableLetters = this.letterPositions.filter(
+			(position) => !this.activeLetterKeys.has(position.key),
+		);
+
+		if (availableLetters.length === 0) {
+			return null;
+		}
+
+		return this.getRandomAmountFromArray<LetterPosition>(
+			availableLetters,
+			1,
+		)[0];
+	};
+
+	private addAmbientLetterInstance = (position?: LetterPosition | null) => {
+		const nextPosition = position ?? this.getRandomInactiveLetterPosition();
+
+		if (!nextPosition) {
+			return false;
+		}
+
+		const startAt = Date.now() + this.getRandomAmbientDelay();
+		const instance = this.buildLetterInstance(
+			nextPosition,
+			"ambient",
+			startAt,
+			LETTER_ANIMATION_DURATION,
+		);
+
+		return this.registerLetterInstance(instance);
+	};
+
+	private getLetterPositionAt = (x: number, y: number) => {
+		const snappedX = Math.floor(x / LETTER_WIDTH) * LETTER_WIDTH;
+		const snappedY = Math.floor(y / LETTER_HEIGHT) * LETTER_HEIGHT;
+
+		if (
+			snappedX < 0 ||
+			snappedX >= this.width ||
+			snappedY < 0 ||
+			snappedY >= this.height
+		) {
+			return null;
+		}
+
+		return (
+			this.letterPositionsByKey.get(this.getPositionKey(snappedX, snappedY)) ??
+			null
+		);
+	};
+
+	private clearHoveredLetter = () => {
+		this.lastHoveredKey = null;
+	};
+
+	private triggerHoverLetter = (position: LetterPosition) => {
+		const existingInstance = this.letterInstancesByKey.get(position.key);
+		const startAt = Date.now();
+
+		if (existingInstance) {
+			if (existingInstance.source === "hover") {
+				return;
+			}
+
+			existingInstance.source = "hover";
+			existingInstance.startAt = startAt;
+			existingInstance.endAt = startAt + HOVER_ANIMATION_DURATION;
+			this.addAmbientLetterInstance();
+
+			return;
+		}
+
+		this.registerLetterInstance(
+			this.buildLetterInstance(
+				position,
+				"hover",
+				startAt,
+				HOVER_ANIMATION_DURATION,
+			),
+		);
+	};
+
+	private handlePointerMove = (event: PointerEvent) => {
+		if (!this.easterEggEnabled) {
+			return;
+		}
+
+		const letterPosition = this.getLetterPositionAt(
+			event.clientX,
+			event.clientY,
+		);
+
+		if (!letterPosition) {
+			this.lastHoveredKey = null;
+			return;
+		}
+
+		if (this.lastHoveredKey === letterPosition.key) {
+			return;
+		}
+
+		this.lastHoveredKey = letterPosition.key;
+		this.triggerHoverLetter(letterPosition);
+	};
+
+	private attachPointerTracking = () => {
+		if (this.pointerTrackingAttached) {
+			return;
+		}
+
+		window.addEventListener("pointermove", this.handlePointerMove, {
+			passive: true,
+		});
+		this.overlayCanvas.addEventListener(
+			"pointerleave",
+			this.clearHoveredLetter,
+		);
+		window.addEventListener("blur", this.clearHoveredLetter);
+		this.pointerTrackingAttached = true;
+	};
+
+	public enableHoverEasterEgg = () => {
+		this.easterEggEnabled = true;
+		this.attachPointerTracking();
+	};
+
 	/**
 	 * Sets up the background canvases. The text is decided based on the title of the page.
 	 */
@@ -81,9 +297,8 @@ class PageBackground {
 			text += "_";
 		}
 
-		// Letters are 17px wide and 35px tall
-		const letters = Math.ceil(this.width / 17);
-		const lines = Math.ceil(this.height / 35);
+		const letters = Math.ceil(this.width / LETTER_WIDTH);
+		const lines = Math.ceil(this.height / LETTER_HEIGHT);
 
 		// Loop through the canvas and draw the text
 		this.baseCtx.font = "28px Geist Mono";
@@ -94,13 +309,20 @@ class PageBackground {
 		let currentShift = 0;
 		for (let i = 0; i < lines; i++) {
 			for (let j = 0; j < letters; j++) {
-				const charIndex = ((j + currentShift) % text.length + text.length) % text.length;
-				this.baseCtx.fillText(text[charIndex], j * 17, i * 35);
-				this.letterPositions.push({
-					x: j * 17,
-					y: i * 35,
+				const charIndex =
+					(((j + currentShift) % text.length) + text.length) % text.length;
+				const x = j * LETTER_WIDTH;
+				const y = i * LETTER_HEIGHT;
+				const position = {
+					x,
+					y,
 					letter: text[charIndex],
-				});
+					key: this.getPositionKey(x, y),
+				};
+
+				this.baseCtx.fillText(position.letter, position.x, position.y);
+				this.letterPositions.push(position);
+				this.letterPositionsByKey.set(position.key, position);
 			}
 			// Randomly shift +1 or -1 for the next line
 			currentShift += Math.random() > 0.5 ? 1 : -1;
@@ -112,54 +334,16 @@ class PageBackground {
 			Number.parseInt((lines * 0.75).toFixed(), 10),
 		);
 
-		this.overlayCtx.font = "bold 28px Geist Mono";
-		this.overlayCtx.textAlign = "start";
-		this.overlayCtx.textBaseline = "top";
+		this.configureOverlayContext();
 		this.overlayCtx.fillStyle = `rgba(${this.primaryRgb}, 0)`;
-		this.overlayCtx.shadowBlur = 16;
 		this.overlayCtx.shadowColor = `rgba(${this.primaryRgb}, 0)`;
 
-		// Draw the letters on the overlay canvas
 		for (const letter of randomLetters) {
-			this.overlayCtx.fillText(letter.letter, letter.x, letter.y);
-
-			// Some number between LETTER_FADE_DURATION[0] and LETTER_FADE_DURATION[1] (in seconds)
-			const animLength =
-				this.LETTER_FADE_DURATION[0] +
-				Math.random() *
-					(this.LETTER_FADE_DURATION[1] - this.LETTER_FADE_DURATION[0]);
-
-			this.letterInstances.push({
-				x: letter.x,
-				y: letter.y,
-				letter: letter.letter,
-				timestamp: Date.now(),
-				fadeout: Date.now() + animLength * 1000,
-			});
+			this.addAmbientLetterInstance(letter);
 		}
 
 		// Make the base canvas visible
 		this.baseCanvas.style.opacity = "1";
-	};
-
-	/**
-	 * Simple sine easing function. Used for fading in and out letters.
-	 * @param timestamp - The current timestamp.
-	 * @param start - The start timestamp of a letter.
-	 * @param end - The end timestamp of a letter.
-	 */
-	private easeInOutSine = (timestamp: number, start: number, end: number) => {
-		const totalDuration = end - start;
-
-		// If the current timestamp is before the start, return 0
-		if (timestamp < start) {
-			return 0;
-		}
-
-		const elapsedAfterEnd = timestamp - end;
-		const progressAfterEnd = elapsedAfterEnd / (totalDuration / 2);
-		
-		return Math.max(0, 0.5 - 0.5 * Math.cos(progressAfterEnd * Math.PI));
 	};
 
 	/**
@@ -172,8 +356,8 @@ class PageBackground {
 		let len = arr.length;
 
 		// Initialize arrays beforehand
-		const result = new Array(n);
-		const taken = new Array(len);
+		const result = new Array<T>(n);
+		const taken = new Array<number>(len);
 
 		if (n > len) {
 			throw new AstroError(
@@ -202,45 +386,38 @@ class PageBackground {
 			this.overlayCanvas.height,
 		);
 
-		this.overlayCtx.font = "bold 28px Geist Mono";
-		this.overlayCtx.textAlign = "start";
-		this.overlayCtx.textBaseline = "top";
-		this.overlayCtx.shadowBlur = 16;
+		this.configureOverlayContext();
+
+		const now = Date.now();
+		const nextLetterInstances: LetterInstance[] = [];
+		let ambientReplacements = 0;
 
 		for (const letter of this.letterInstances) {
-			if (letter.fadeout > Date.now()) continue;
+			const alpha = this.getLetterAlpha(now, letter.startAt, letter.endAt);
 
-			const alpha = this.easeInOutSine(
-				Date.now(),
-				letter.timestamp,
-				letter.fadeout,
-			);
+			if (alpha <= MINIMUM_ALPHA && now > letter.endAt) {
+				this.removeLetterInstance(letter.key);
 
-			if (Math.abs(alpha) < 0.000001 && Date.now() > letter.fadeout) {
-				this.letterInstances.splice(this.letterInstances.indexOf(letter), 1);
-				const randomLetter = this.getRandomAmountFromArray<LetterPosition>(
-					this.letterPositions,
-					1,
-				);
+				if (letter.source === "ambient") {
+					ambientReplacements += 1;
+				}
 
-				this.letterInstances.push({
-					x: randomLetter[0].x,
-					y: randomLetter[0].y,
-					letter: randomLetter[0].letter,
-					timestamp: Date.now(),
-					fadeout:
-						Date.now() +
-						(this.LETTER_FADE_DURATION[0] +
-							Math.random() *
-								(this.LETTER_FADE_DURATION[1] - this.LETTER_FADE_DURATION[0])) *
-							1000,
-				});
-			} else {
+				continue;
+			}
+
+			if (alpha > MINIMUM_ALPHA) {
 				this.overlayCtx.fillStyle = `rgba(${this.primaryRgb}, ${alpha})`;
 				this.overlayCtx.shadowColor = `rgba(${this.primaryRgb}, ${alpha})`;
 				this.overlayCtx.fillText(letter.letter, letter.x, letter.y);
 			}
 
+			nextLetterInstances.push(letter);
+		}
+
+		this.letterInstances = nextLetterInstances;
+
+		for (let index = 0; index < ambientReplacements; index++) {
+			this.addAmbientLetterInstance();
 		}
 
 		requestAnimationFrame(this.redrawBackground);
@@ -267,8 +444,12 @@ class PageBackground {
 			this.overlayCanvas.height,
 		);
 
+		this.letterPositionsByKey.clear();
 		this.letterInstances = [];
+		this.letterInstancesByKey.clear();
+		this.activeLetterKeys.clear();
 		this.letterPositions = [];
+		this.lastHoveredKey = null;
 
 		this.initBackground();
 	};
@@ -291,12 +472,21 @@ async function loadFont() {
 async function initializeBackground() {
 	await loadFont();
 
-	const canvas = document.getElementById("bg-canvas") as HTMLCanvasElement;
-	const overlayCanvas = document.getElementById(
-		"overlay-canvas",
-	) as HTMLCanvasElement;
+	const canvas = document.getElementById("bg-canvas");
+	const overlayCanvas = document.getElementById("overlay-canvas");
+
+	if (
+		!(canvas instanceof HTMLCanvasElement) ||
+		!(overlayCanvas instanceof HTMLCanvasElement)
+	) {
+		throw new AstroError("Background canvas elements not found.");
+	}
 
 	const background = new PageBackground(canvas, overlayCanvas);
+	window.pageBackground = background;
+	window.dispatchEvent(
+		new CustomEvent("page-background:ready", { detail: background }),
+	);
 
 	window.addEventListener("resize", () => {
 		background.resizeBackground();

@@ -9,14 +9,13 @@ import Icon from "../components/Icon.astro";
 import ImageGlow from "../components/ImageGlow.astro";
 import Layout from "../layouts/Layout.astro";
 
-const [posts, projects, about, workExperience, quickInfo] =
-	await Promise.all([
-		getCollection("posts", (post) => post.data.draft !== true),
-		getCollection("projects"),
-		getEntry("other", "about"),
-		getCollection("workExperience"),
-		getCollection("quickInfo"),
-	]);
+const [posts, projects, about, workExperience, quickInfo] = await Promise.all([
+	getCollection("posts", (post) => post.data.draft !== true),
+	getCollection("projects"),
+	getEntry("other", "about"),
+	getCollection("workExperience"),
+	getCollection("quickInfo"),
+]);
 
 const { Content: About } = await render(about!);
 ---
@@ -28,13 +27,20 @@ const { Content: About } = await render(about!);
 >
 	<div class="layout-grid-left" slot="left">
 		<Card class="flex-col-card">
-			<ImageGlow
-				quality={100}
-				height={120}
-				src={ProfilePicture}
-				alt="An I inscribed in a BGA landing pattern"
-				loading="eager"
-			/>
+			<button
+				type="button"
+				class="profile-picture-trigger"
+				id="profile-picture-trigger"
+				aria-label="Unlock the profile picture easter egg"
+			>
+				<ImageGlow
+					quality={100}
+					height={120}
+					src={ProfilePicture}
+					alt="An I inscribed in a BGA landing pattern"
+					loading="eager"
+				/>
+			</button>
 			<h2>{name}</h2>
 			<ul class="overview-list">
 				{
@@ -175,3 +181,55 @@ const { Content: About } = await render(about!);
 		</Card>
 	</div>
 </Layout>
+
+<script>
+	interface PageBackgroundController {
+		enableHoverEasterEgg: () => void;
+	}
+
+	const unlockThreshold = 5;
+	let clickCount = 0;
+	let unlocked = false;
+
+	const getPageBackground = () => {
+		return (window as Window & { pageBackground?: PageBackgroundController })
+			.pageBackground;
+	};
+
+	const enableEasterEgg = () => {
+		if (unlocked) {
+			return;
+		}
+
+		const background = getPageBackground();
+
+		if (!background) {
+			window.addEventListener(
+				"page-background:ready",
+				(event) => {
+					const readyEvent = event as CustomEvent<PageBackgroundController>;
+					readyEvent.detail.enableHoverEasterEgg();
+				},
+				{ once: true },
+			);
+		} else {
+			background.enableHoverEasterEgg();
+		}
+
+		unlocked = true;
+	};
+
+	const profilePictureTrigger = document.getElementById("profile-picture-trigger");
+
+	profilePictureTrigger?.addEventListener("click", () => {
+		if (unlocked) {
+			return;
+		}
+
+		clickCount += 1;
+
+		if (clickCount >= unlockThreshold) {
+			enableEasterEgg();
+		}
+	});
+</script>
