@@ -74,7 +74,7 @@ class PageBackground {
 	private initBackground = () => {
 		let text: string =
 			document.title.toLowerCase().split(" | ")[0].replace(/\s/g, "_") ||
-			"spectre";
+			"Burwell";
 
 		// Add additional underscore to separate words
 		if (text.includes("_")) {
@@ -89,17 +89,21 @@ class PageBackground {
 		this.baseCtx.font = "28px Geist Mono";
 		this.baseCtx.textAlign = "start";
 		this.baseCtx.textBaseline = "top";
-		this.baseCtx.fillStyle = "rgba(255, 255, 255, 0.01)";
+		this.baseCtx.fillStyle = "rgba(255, 255, 255, 0.02)";
 
+		let currentShift = 0;
 		for (let i = 0; i < lines; i++) {
 			for (let j = 0; j < letters; j++) {
-				this.baseCtx.fillText(text[j % text.length], j * 17, i * 35);
+				const charIndex = ((j + currentShift) % text.length + text.length) % text.length;
+				this.baseCtx.fillText(text[charIndex], j * 17, i * 35);
 				this.letterPositions.push({
 					x: j * 17,
 					y: i * 35,
-					letter: text[j % text.length],
+					letter: text[charIndex],
 				});
 			}
+			// Randomly shift +1 or -1 for the next line
+			currentShift += Math.random() > 0.5 ? 1 : -1;
 		}
 
 		// Randomly select 75% of the letters to animate
@@ -152,17 +156,10 @@ class PageBackground {
 			return 0;
 		}
 
-		// If the current timestamp is after the end, return 0
-		if (timestamp > end) {
-			const elapsedAfterEnd = timestamp - end;
-			const progressAfterEnd = elapsedAfterEnd / (totalDuration / 2);
-
-			return Math.sin(progressAfterEnd * Math.PI);
-		}
-
-		const progress = (timestamp - start) / totalDuration;
-
-		return Math.max(0, 0.5 - 0.5 * Math.cos(progress * Math.PI));
+		const elapsedAfterEnd = timestamp - end;
+		const progressAfterEnd = elapsedAfterEnd / (totalDuration / 2);
+		
+		return Math.max(0, 0.5 - 0.5 * Math.cos(progressAfterEnd * Math.PI));
 	};
 
 	/**
@@ -219,7 +216,7 @@ class PageBackground {
 				letter.fadeout,
 			);
 
-			if (alpha <= 0 && Date.now() > letter.fadeout) {
+			if (Math.abs(alpha) < 0.000001 && Date.now() > letter.fadeout) {
 				this.letterInstances.splice(this.letterInstances.indexOf(letter), 1);
 				const randomLetter = this.getRandomAmountFromArray<LetterPosition>(
 					this.letterPositions,
@@ -238,11 +235,12 @@ class PageBackground {
 								(this.LETTER_FADE_DURATION[1] - this.LETTER_FADE_DURATION[0])) *
 							1000,
 				});
+			} else {
+				this.overlayCtx.fillStyle = `rgba(${this.primaryRgb}, ${alpha})`;
+				this.overlayCtx.shadowColor = `rgba(${this.primaryRgb}, ${alpha})`;
+				this.overlayCtx.fillText(letter.letter, letter.x, letter.y);
 			}
 
-			this.overlayCtx.fillStyle = `rgba(${this.primaryRgb}, ${alpha})`;
-			this.overlayCtx.shadowColor = `rgba(${this.primaryRgb}, ${alpha})`;
-			this.overlayCtx.fillText(letter.letter, letter.x, letter.y);
 		}
 
 		requestAnimationFrame(this.redrawBackground);
