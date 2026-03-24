@@ -3,4 +3,7 @@
 	"[mdx]": {
         "editor.wordWrap": "on"
     },
+    "chat.tools.terminal.autoApprove": {
+        "pnpm": true
+    },
 }

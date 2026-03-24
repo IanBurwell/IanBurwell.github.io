@@ -77,8 +77,7 @@ const { Content } = await render(project);
 							<li>
 								<Tag href={info.link} class="project-info-item">
 									<Icon
-										type={info.icon.type}
-										name={info.icon.name as any}
+										name={info.icon}
 										width={24}
 										height={24}
 										class="glow-icon"
@@ -103,7 +102,6 @@ const { Content } = await render(project);
 				</Card>
 			)
 		}
-	</article>
 	</article>
 </Layout>
 <style>

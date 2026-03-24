@@ -31,48 +31,8 @@
 	outline-offset: 0.4rem;
 }
 
-.header-container {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	gap: 1rem;
-	margin-bottom: 1rem;
-}
-
-.header-container * {
-	margin: 0;
-}
-
 .prose {
 	line-height: 1.6;
-}
-
-.post-container {
-	display: flex;
-	flex-direction: column;
-	gap: 1rem;
-	padding: 1rem;
-	border: 1px solid #353535;
-	color: #ffffff;
-	text-decoration: none;
-	transition:
-		background-color 0.15s ease,
-		border 0.15s ease;
-}
-
-.post-container:hover,
-.post-container:focus-visible {
-	background-color: rgba(140, 92, 245, 0.125);
-	border: 1px solid var(--primary);
-}
-
-.post-container:focus-visible {
-	outline: none;
-}
-
-.post-date,
-.work-experience-duration {
-	color: #c7c7c7;
 }
 
 .work-experience-container {

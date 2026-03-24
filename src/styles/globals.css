@@ -114,6 +114,18 @@ main {
 	outline: none;
 }
 
+.header-container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 1rem;
+	margin-bottom: 1rem;
+}
+
+.header-container * {
+	margin: 0;
+}
+
 .post-header {
 	display: flex;
 	flex-direction: row;

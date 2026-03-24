@@ -49,8 +49,7 @@ const { Content: About } = await render(about!);
 							{info.data.link ? (
 								<a href={info.data.link} class="info-link">
 									<Icon
-										type={info.data.icon.type}
-										name={info.data.icon.name as any}
+										name={info.data.icon}
 										width={24}
 										height={24}
 										class="glow-icon"
@@ -60,8 +59,7 @@ const { Content: About } = await render(about!);
 							) : (
 								<>
 									<Icon
-										type={info.data.icon.type}
-										name={info.data.icon.name as any}
+										name={info.data.icon}
 										width={24}
 										height={24}
 										class="glow-icon"
@@ -79,7 +77,6 @@ const { Content: About } = await render(about!);
 		<Card>
 			<div class="header-container">
 				<Icon
-					type="lucide"
 					name="user"
 					width={24}
 					height={24}
@@ -94,7 +91,6 @@ const { Content: About } = await render(about!);
 		<Card>
 			<div class="header-container">
 				<Icon
-					type="lucide"
 					name="rss"
 					width={24}
 					height={24}
@@ -126,7 +122,6 @@ const { Content: About } = await render(about!);
 		<Card>
 			<div class="header-container">
 				<Icon
-					type="lucide"
 					name="folder-git"
 					width={24}
 					height={24}
@@ -156,7 +151,6 @@ const { Content: About } = await render(about!);
 		<Card>
 			<div class="header-container">
 				<Icon
-					type="lucide"
 					name="briefcase-business"
 					width={24}
 					height={24}

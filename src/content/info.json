@@ -1,28 +1,18 @@
 [
 	{
 		"id": 1,
-		"icon": {
-			"type": "lucide",
-			"name": "earth"
-		},
-		"type": "lucide",
+		"icon": "earth",
 		"text": "Made in the USA"
 	},
 	{
 		"id": 2,
-		"icon": {
-			"type": "lucide",
-			"name": "github"
-		},
+		"icon": "github",
 		"text": "GitHub",
 		"link": "https://github.com/IanBurwell"
 	},
 	{
 		"id": 3,
-		"icon": {
-			"type": "lucide",
-			"name": "linkedin"
-		},
+		"icon": "linkedin",
 		"text": "LinkedIn",
 		"link": "https://www.linkedin.com/in/ianburwell/"
 	}

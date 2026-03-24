@@ -1,27 +1,18 @@
 import { defineCollection, reference, z } from "astro:content";
 import type { icons as lucideIcons } from "@iconify-json/lucide/icons.json";
-import type { icons as simpleIcons } from "@iconify-json/simple-icons/icons.json";
 import { file, glob } from "astro/loaders";
 
 const other = defineCollection({
 	loader: glob({ base: "src/content/other", pattern: "**/*.{md,mdx}" }),
 });
 
-const lucideIconSchema = z.object({
-	type: z.literal("lucide"),
-	name: z.custom<keyof typeof lucideIcons>(),
-});
-
-const simpleIconSchema = z.object({
-	type: z.literal("simple-icons"),
-	name: z.custom<keyof typeof simpleIcons>(),
-});
+const iconSchema = z.custom<keyof typeof lucideIcons>();
 
 const quickInfo = defineCollection({
 	loader: file("src/content/info.json"),
 	schema: z.object({
 		id: z.number(),
-		icon: z.union([lucideIconSchema, simpleIconSchema]),
+		icon: iconSchema,
 		text: z.string(),
 		link: z.string().url().optional(),
 	}),
@@ -56,10 +47,12 @@ const posts = defineCollection({
 			tags: z.array(reference("tags")),
 			draft: z.boolean().optional().default(false),
 			image: image(),
-			aiDisclaimer: z.object({
-				text: z.string(),
-				link: z.string().url().optional(),
-			}).optional(),
+			aiDisclaimer: z
+				.object({
+					text: z.string(),
+					link: z.string().url().optional(),
+				})
+				.optional(),
 		}),
 });
 
@@ -75,14 +68,16 @@ const projects = defineCollection({
 			info: z.array(
 				z.object({
 					text: z.string(),
-					icon: z.union([lucideIconSchema, simpleIconSchema]),
+					icon: iconSchema,
 					link: z.string().url().optional(),
 				}),
 			),
-			aiDisclaimer: z.object({
-				text: z.string(),
-				link: z.string().url().optional(),
-			}).optional(),
+			aiDisclaimer: z
+				.object({
+					text: z.string(),
+					link: z.string().url().optional(),
+				})
+				.optional(),
 		}),
 });
 
