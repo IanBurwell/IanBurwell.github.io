@@ -9,14 +9,13 @@ import Icon from "../components/Icon.astro";
 import ImageGlow from "../components/ImageGlow.astro";
 import Layout from "../layouts/Layout.astro";
 
-const [posts, projects, about, workExperience, quickInfo, socials] =
+const [posts, projects, about, workExperience, quickInfo] =
 	await Promise.all([
 		getCollection("posts", (post) => post.data.draft !== true),
 		getCollection("projects"),
 		getEntry("other", "about"),
 		getCollection("workExperience"),
 		getCollection("quickInfo"),
-		getCollection("socials"),
 	]);
 
 const { Content: About } = await render(about!);
@@ -41,35 +40,29 @@ const { Content: About } = await render(about!);
 				{
 					quickInfo.map((info) => (
 						<li>
-							<Icon
-								type={info.data.icon.type}
-								name={info.data.icon.name as any}
-								width={24}
-								height={24}
-								class="glow-icon"
-							/>
-							<span>{info.data.text}</span>
-						</li>
-					))
-				}
-			</ul>
-		</Card>
-		<Card>
-			<h3 class="no-mt">Socials</h3>
-			<ul class="overview-list">
-				{
-					socials.map((item) => (
-						<li>
-							<a href={item.data.link} class="socials-link">
-								<Icon
-									type={item.data.icon.type}
-									name={item.data.icon.name as any}
-									width={24}
-									height={24}
-									class="glow-icon"
-								/>
-								<span>{item.data.text}</span>
-							</a>
+							{info.data.link ? (
+								<a href={info.data.link} class="socials-link">
+									<Icon
+										type={info.data.icon.type}
+										name={info.data.icon.name as any}
+										width={24}
+										height={24}
+										class="glow-icon"
+									/>
+									<span>{info.data.text}</span>
+								</a>
+							) : (
+								<>
+									<Icon
+										type={info.data.icon.type}
+										name={info.data.icon.name as any}
+										width={24}
+										height={24}
+										class="glow-icon"
+									/>
+									<span>{info.data.text}</span>
+								</>
+							)}
 						</li>
 					))
 				}

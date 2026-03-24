@@ -23,16 +23,7 @@ const quickInfo = defineCollection({
 		id: z.number(),
 		icon: z.union([lucideIconSchema, simpleIconSchema]),
 		text: z.string(),
-	}),
-});
-
-const socials = defineCollection({
-	loader: file("src/content/socials.json"),
-	schema: z.object({
-		id: z.number(),
-		icon: z.union([lucideIconSchema, simpleIconSchema]),
-		text: z.string(),
-		link: z.string().url(),
+		link: z.string().url().optional(),
 	}),
 });
 
@@ -101,6 +92,5 @@ export const collections = {
 	projects,
 	other,
 	quickInfo,
-	socials,
 	workExperience,
 };

@@ -87,7 +87,7 @@
 }
 
 .socials-link {
-	color: white;
+	color: var(--primary-light);
 	display: flex;
 	flex-direction: row;
 	gap: 0.75rem;
