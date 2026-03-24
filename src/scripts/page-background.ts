@@ -172,14 +172,23 @@ class PageBackground {
 		)[0];
 	};
 
-	private addAmbientLetterInstance = (position?: LetterPosition | null) => {
+	private addAmbientLetterInstance = (
+		position?: LetterPosition | null,
+		options?: { startVisible?: boolean; initialSeed?: boolean },
+	) => {
 		const nextPosition = position ?? this.getRandomInactiveLetterPosition();
 
 		if (!nextPosition) {
 			return false;
 		}
 
-		const startAt = Date.now() + this.getRandomAmbientDelay();
+		const now = Date.now();
+		const startAt = options?.startVisible
+			? now - Math.random() * LETTER_ANIMATION_DURATION
+			: now +
+				(options?.initialSeed
+					? Math.random() * this.LETTER_FADE_DURATION[1] * 1000
+					: this.getRandomAmbientDelay());
 		const instance = this.buildLetterInstance(
 			nextPosition,
 			"ambient",
@@ -339,7 +348,10 @@ class PageBackground {
 		this.overlayCtx.shadowColor = `rgba(${this.primaryRgb}, 0)`;
 
 		for (const letter of randomLetters) {
-			this.addAmbientLetterInstance(letter);
+			this.addAmbientLetterInstance(letter, {
+				startVisible: Math.random() < 0.4,
+				initialSeed: true,
+			});
 		}
 
 		// Make the base canvas visible
