@@ -53,6 +53,7 @@ const config = defineConfig({
 				reactionsEnabled: GISCUS_REACTIONS_ENABLED === 'true',
 				emitMetadata: GISCUS_EMIT_METADATA === 'true',
 				lang: GISCUS_LANG,
+				theme: 'https://ianburwell.com/styles/giscus',
 			},
 		}),
 	],

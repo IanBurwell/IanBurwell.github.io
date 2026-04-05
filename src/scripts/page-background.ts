@@ -52,7 +52,7 @@ class PageBackground {
 	private letterInstancesByKey = new Map<string, LetterInstance>();
 	private activeLetterKeys = new Set<string>();
 
-	private primaryRgb: string;
+	primaryRgb: string;
 	private easterEggEnabled = false;
 	private pointerTrackingAttached = false;
 	private lastHoveredKey: string | null = null;

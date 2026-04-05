@@ -4,6 +4,7 @@ import "../styles/globals.css";
 
 import { name, themeColor, twitterHandle } from "spectre:globals";
 import Background from "../components/Background.astro";
+import ColorPicker from "../components/ColorPicker.astro";
 import LayoutGrid from "../components/LayoutGrid.astro";
 import Navbar from "../components/Navbar.astro";
 
@@ -74,5 +75,6 @@ const { title, description, image, pagefindIgnore, article } = Astro.props;
 			<slot name="404" />
 		</main>
 		<Background />
+		<ColorPicker />
 	</body>
 </html>
