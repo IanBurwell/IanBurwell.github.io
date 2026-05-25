@@ -14,39 +14,51 @@ aiDisclaimer:
 My personal website hosting blog posts, project pages, and the odd easter egg. 
 
 ## Motivation
-Goals: 
-  Explore web dev
-  light weight / responsive
-  learn to use AI agents better
-  create framework for creativity
-  document cool stuff
-  easter eggs
-Constraints:
-  Low cost
-  Low complexity
-  
+The motivation for this new website came from the desire to have a more satisfying place to record my projects and write about cool subjects I am currently excited about. It will provide a place for both me to reference regarding past research, as well as a place for others to come and learn a thing or two. 
 
-## Architecture 
-Hosted on GitHub
-Uses Astro for simplicity
-  MDX for blog posts
-  Spectre for theme/env bootstraping
-Uses giscus for static commenting system
+This site was a complete teardown and redo of my previous website, as I had lost all motivation to continue it. By rebuilding, I am able to leverage the motivation of re-exploring web development to be the catalyst for creating a website that has a lower bar to maintain and generate content for. 
 
+Ultimately, for this project to be a success I have decided it needs to meet the following goals:
+1. **Be fun** - I want it to embody my personality and provide a playground as well as a documentation site. This means easter eggs, satisfying visuals, and maybe some live demos of projects to play with.
+2. **Be Lightweight** - It should load quickly, and I weirdly want it to be hostable on very lightweight hardware such as an ESP32.
+3. **Be Cheap** - Although one day I may host this on a homelab server, ideally it is hostable for free somehow.
+4. **Be Easy** - For the content creator (me), it must be super simple to create content. No trying to figure out how to embed photos, or format CSS to make the page look pretty.
+5. **Be Consistent** - In particular, it needs to be updated consistently with new content. This is going to be the hardest goal to meet as it requires me to build a new habit.
+
+## The Hidden Challenge
+
+As I noted in my goals, the hardest challenge of this project is ultimately not technical, but instead *behavioral*. The website needs content, and I do not want to take the lazy approach of having AI churn out articles. This means I need to create content. But as much as I want to be, I do not self identify as a content creator (yet). And as James Clear says in his book [Atomic Habits](https://www.goodreads.com/book/show/40121378-atomic-habits): 
+
+> "In order to believe in a new identity, we have to prove it to ourselves".
+
+So, how do I prove that I am a content creator? I must build habits and take actions that individually provide evidence towards the type of person I am. 
+
+How does one build a habit? There is sheer perseverance of course, but I believe brute forcing a new habit to be is a poor choice. Perseverance comes after you have built the foundations of your desired identity, not before. It is much less painful to build up your identity with small habits. They will then push you in the right direction and make building larger habits far easier. If I am able to believe I am the kind of person to enjoy taking notes about my research, it makes it that much easier to persevere through writing an article about that which I have learned. 
+
+So I will start simple. I will encourage myself to take notes more. I will focus less on the perfection and destination of my content, and more on just producing and publishing. Then only once I have enough evidence to look back on will I be able to confidently identify as a content creator.
+
+## Technical Architecture 
+- Hosted on GitHub for free (as in speech *and* [beer](https://www.wired.com/2006/09/free-as-in-beer/)!)
+  - [Deployed](https://github.com/IanBurwell/IanBurwell.github.io/deployments) to [ianburwell.com](https://ianburwell.com/) 
+- Uses the [Astro framework](https://astro.build/) for simplicity
+  - Uses Markdown (MDX) for content pages
+  - Fully static and lightweight
+  - Theme based on [Spectre](https://astro.build/themes/details/spectre/)
+- Uses giscus for a static commenting system
 
 ## Results
-This page, custom name, lighthouse score
+You are seeing the results of this project right now! My website is actively deployed to [ianburwell.com](https://ianburwell.com/) and as of writing has a lighthouse performance scores of over 98/100 from all major countries. 
 
 ## Follow on Work
-Not done, needs more easter eggs, needs more content, could be self-hosted and non-static to allow more interesting APIs, speed improvements
-
-## TODO
-- add method to cross link blog posts
-- document why, goals, tools used, and ideas to make it better
-- project status & tech stack & other info on the side (or below the image) instead
-
+While my website is deployed on the world wide web, there is still a lot to do to mature it. Beyond making more content, I would like to:
+1. Add more easter eggs
+2. Explore redundant self-hosting
+3. Explore benefits of non-static hosting
+4. Improve speed even further
+5. Add various little tools such as general purpose serial terminal or some random EE calculator
 
 ## Inspiration Websites
 - [breq.dev](https://breq.dev/)
 - [msadowski.github.io](https://msadowski.github.io/)
 - [token-template.deno.dev](https://token-template.deno.dev/)
+- [lou.gg](https://lou.gg/)

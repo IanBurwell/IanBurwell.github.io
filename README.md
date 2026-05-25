@@ -36,5 +36,5 @@ My website is based on the astro theme [Spectre](https://github.com/louisescher/
 <summary>TODO</summary>
 
 - Move over old projects from previous website
-- Add back giscus support
+- Create a hidden landing page that I can make my new tab page. It should inspire me as well as provide a quick google search bar and other basic new tab functionality
 - Potentially add website size to the readme somehow. It would be cool to flex how small it is PLUS having it there would make me try and push it to be even more light weight
